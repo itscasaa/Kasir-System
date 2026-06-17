@@ -8,13 +8,13 @@ export const orderHistory = [
     customer: "Anna Jones",
     type: "Dine-in",
     table: "Table 12",
-    amount: 248400,
+    amount: 241380,
     status: "Completed",
-    payment: "Visa ending in \u2022\u2022\u2022\u2022 4242",
+    payment: "Visa ending in •••• 4242",
     items: [
-      { name: "Truffle Mushroom Risotto", note: "Extra Parmesan", price: 120000, costPrice: 80000 },
-      { name: "Grilled Salmon Bowl", note: "Quinoa base", price: 85000, costPrice: 55000 },
-      { name: "Iced Matcha Latte", note: "", price: 25000, costPrice: 15000 }
+      { name: "Beras Premium Cianjur 5kg", note: "", price: 72500, costPrice: 65000 },
+      { name: "Minyak Goreng Bimoli 2L", note: "", price: 36000, costPrice: 31000 },
+      { name: "Indomie Goreng Spesial (Karton)", note: "", price: 115000, costPrice: 102000 }
     ],
     taxRate: 0.08
   },
@@ -25,13 +25,13 @@ export const orderHistory = [
     customer: "Marcus Chen",
     type: "Takeaway",
     table: "",
-    amount: 64800,
+    amount: 58860,
     status: "Cancelled",
     payment: "Not charged",
     items: [
-      { name: "Chicken Katsu Bento", note: "No mayo", price: 30000, costPrice: 20000 },
-      { name: "Iced Lemon Tea", note: "", price: 15000, costPrice: 8000 },
-      { name: "French Fries", note: "", price: 15000, costPrice: 8000 }
+      { name: "Rokok Sampoerna Mild 16", note: "", price: 32500, costPrice: 29500 },
+      { name: "Kopi Kapal Api Mix (Renceng)", note: "", price: 14000, costPrice: 11500 },
+      { name: "Teh Celup Sariwangi isi 25", note: "", price: 8000, costPrice: 6200 }
     ],
     taxRate: 0.08
   },
@@ -42,14 +42,14 @@ export const orderHistory = [
     customer: "Sarah Miller",
     type: "Delivery",
     table: "",
-    amount: 178200,
+    amount: 171180,
     status: "Refunded",
-    payment: "Mastercard ending in \u2022\u2022\u2022\u2022 8891",
+    payment: "Mastercard ending in •••• 8891",
     items: [
-      { name: "Large Italian Pizza", note: "Extra cheese", price: 80000, costPrice: 50000 },
-      { name: "Noodles with Scallops", note: "", price: 35000, costPrice: 22000 },
-      { name: "Healthy Vegie Salad", note: "No onion", price: 20000, costPrice: 13000 },
-      { name: "Waffle with Blueberries", note: "", price: 30000, costPrice: 20000 }
+      { name: "Beras Premium Cianjur 5kg", note: "", price: 72500, costPrice: 65000 },
+      { name: "Telur Ayam Negeri 1kg", note: "", price: 28000, costPrice: 24500 },
+      { name: "Minyak Goreng Bimoli 2L", note: "", price: 36000, costPrice: 31000 },
+      { name: "Detergen Rinso Cair 800ml", note: "", price: 22000, costPrice: 18500 }
     ],
     taxRate: 0.08
   },
@@ -60,13 +60,13 @@ export const orderHistory = [
     customer: "David Wilson",
     type: "Dine-in",
     table: "Table 7",
-    amount: 59400,
+    amount: 48060,
     status: "Completed",
     payment: "Cash",
     items: [
-      { name: "Egg Fried Rice", note: "Spicy", price: 30000, costPrice: 19000 },
-      { name: "Hot Tea", note: "", price: 10000, costPrice: 4000 },
-      { name: "Spring Roll", note: "", price: 15000, costPrice: 9000 }
+      { name: "Telur Ayam Negeri 1kg", note: "", price: 28000, costPrice: 24500 },
+      { name: "Teh Celup Sariwangi isi 25", note: "", price: 8000, costPrice: 6200 },
+      { name: "Chiki Balls Keju 55g", note: "", price: 8500, costPrice: 6800 }
     ],
     taxRate: 0.08
   },
@@ -77,12 +77,12 @@ export const orderHistory = [
     customer: "Guest #42",
     type: "Dine-in",
     table: "Table 3",
-    amount: 35640,
+    amount: 48600,
     status: "Completed",
-    payment: "Visa ending in \u2022\u2022\u2022\u2022 1029",
+    payment: "Visa ending in •••• 1029",
     items: [
-      { name: "Egg Soup with Noodles Inside", note: "", price: 25000, costPrice: 16000 },
-      { name: "Mineral Water", note: "", price: 8000, costPrice: 3000 }
+      { name: "Rokok Surya 16", note: "", price: 31000, costPrice: 28000 },
+      { name: "Kopi Kapal Api Mix (Renceng)", note: "", price: 14000, costPrice: 11500 }
     ],
     taxRate: 0.08
   },
@@ -93,13 +93,13 @@ export const orderHistory = [
     customer: "Elena Rodriguez",
     type: "Takeaway",
     table: "",
-    amount: 86400,
+    amount: 32940,
     status: "Completed",
-    payment: "Debit ending in \u2022\u2022\u2022\u2022 7712",
+    payment: "Debit ending in •••• 7712",
     items: [
-      { name: "Baked Pancake with Honey Sauce", note: "", price: 20000, costPrice: 14000 },
-      { name: "Japanese Homemade Original Ramen", note: "Extra egg", price: 35000, costPrice: 23000 },
-      { name: "Iced Matcha Latte", note: "", price: 25000, costPrice: 15000 }
+      { name: "Gula Pasir Gulaku 1kg", note: "", price: 18000, costPrice: 15500 },
+      { name: "Teh Celup Sariwangi isi 25", note: "", price: 8000, costPrice: 6200 },
+      { name: "Sabun Mandi Lifebuoy Merah", note: "", price: 4500, costPrice: 3500 }
     ],
     taxRate: 0.08
   }
