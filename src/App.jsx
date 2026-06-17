@@ -112,9 +112,9 @@ export default function App() {
     );
   };
 
-  const handleUpdateStock = (productId, newStock) => {
+  const handleUpdateProduct = (productId, updatedFields) => {
     setProducts((prev) =>
-      prev.map((p) => (p.id === productId ? { ...p, stock: newStock } : p))
+      prev.map((p) => (p.id === productId ? { ...p, ...updatedFields } : p))
     );
   };
 
@@ -133,7 +133,7 @@ export default function App() {
       ) : activePage === 'history' ? (
         <HistoryPage orders={orders} />
       ) : activePage === 'stock' ? (
-        <StockPage products={products} onUpdateStock={handleUpdateStock} />
+        <StockPage products={products} onUpdateProduct={handleUpdateProduct} />
       ) : activePage === 'settings' ? (
         <SettingsPage />
       ) : (

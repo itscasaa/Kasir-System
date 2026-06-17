@@ -3,7 +3,7 @@ import { Search, Plus, Minus, RotateCcw, AlertTriangle } from 'lucide-react';
 import { formatCurrency } from '../utils/formatCurrency';
 import { categories } from '../data/menuData';
 
-export default function StockPage({ products, onUpdateStock }) {
+export default function StockPage({ products, onUpdateProduct }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
 
@@ -111,16 +111,32 @@ export default function StockPage({ products, onUpdateStock }) {
                       <td className="px-4 py-3">
                         <span className="text-[12px] text-textSecondary">{p.category}</span>
                       </td>
-                      <td className="px-4 py-3 text-[13px] font-medium text-textSecondary">
-                        {formatCurrency(p.costPrice)}
+                      <td className="px-4 py-3">
+                        <div className="flex items-center bg-transparent hover:bg-surfaceMuted border border-transparent hover:border-borderBase focus-within:border-primary focus-within:bg-surfaceMuted rounded px-1.5 py-1 transition-all w-24">
+                          <span className="text-[11px] font-bold text-textSecondary mr-0.5">Rp</span>
+                          <input
+                            type="number"
+                            value={p.costPrice}
+                            onChange={(e) => onUpdateProduct(p.id, { costPrice: Math.max(0, parseInt(e.target.value) || 0) })}
+                            className="w-full bg-transparent text-[13px] font-medium text-textSecondary outline-none border-none p-0 focus:ring-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          />
+                        </div>
                       </td>
-                      <td className="px-4 py-3 text-[13px] font-semibold text-textPrimary">
-                        {formatCurrency(p.price)}
+                      <td className="px-4 py-3">
+                        <div className="flex items-center bg-transparent hover:bg-surfaceMuted border border-transparent hover:border-borderBase focus-within:border-primary focus-within:bg-surfaceMuted rounded px-1.5 py-1 transition-all w-28">
+                          <span className="text-[11px] font-bold text-textSecondary mr-0.5">Rp</span>
+                          <input
+                            type="number"
+                            value={p.price}
+                            onChange={(e) => onUpdateProduct(p.id, { price: Math.max(0, parseInt(e.target.value) || 0) })}
+                            className="w-full bg-transparent text-[13px] font-bold text-textPrimary outline-none border-none p-0 focus:ring-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          />
+                        </div>
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2.5">
                           <button
-                            onClick={() => onUpdateStock(p.id, Math.max(0, p.stock - 1))}
+                            onClick={() => onUpdateProduct(p.id, { stock: Math.max(0, p.stock - 1) })}
                             className="w-6 h-6 rounded-full bg-surfaceMuted border border-borderBase flex items-center justify-center text-textSecondary hover:bg-gray-100 hover:text-textPrimary transition-all active:scale-90"
                           >
                             <Minus size={11} />
@@ -128,11 +144,11 @@ export default function StockPage({ products, onUpdateStock }) {
                           <input
                             type="number"
                             value={p.stock}
-                            onChange={(e) => onUpdateStock(p.id, Math.max(0, parseInt(e.target.value) || 0))}
+                            onChange={(e) => onUpdateProduct(p.id, { stock: Math.max(0, parseInt(e.target.value) || 0) })}
                             className="w-12 text-center text-[13px] font-bold text-textPrimary bg-surfaceMuted border border-borderBase rounded px-1 py-0.5 outline-none focus:border-primary"
                           />
                           <button
-                            onClick={() => onUpdateStock(p.id, p.stock + 1)}
+                            onClick={() => onUpdateProduct(p.id, { stock: p.stock + 1 })}
                             className="w-6 h-6 rounded-full bg-surfaceMuted border border-borderBase flex items-center justify-center text-textSecondary hover:bg-gray-100 hover:text-textPrimary transition-all active:scale-90"
                           >
                             <Plus size={11} />
@@ -208,7 +224,7 @@ export default function StockPage({ products, onUpdateStock }) {
                         </div>
                       </div>
                       <button
-                        onClick={() => onUpdateStock(p.id, p.stock + 20)}
+                        onClick={() => onUpdateProduct(p.id, { stock: p.stock + 20 })}
                         className="flex items-center gap-1 px-2.5 py-1.5 bg-primaryContainer text-white hover:bg-primaryHover text-[11px] font-semibold rounded-lg active:scale-95 transition-all shadow-sm shrink-0"
                       >
                         <RotateCcw size={10} />
