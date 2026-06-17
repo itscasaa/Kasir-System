@@ -1,5 +1,5 @@
 export const defaultSettings = {
-  storeName: 'Circie Downtown',
+  storeName: 'Toko Lubis',
   currency: 'USD ($) - US Dollar',
   address: '123 Espresso Way, Downtown District, Metropolis, NY 10001'
 };

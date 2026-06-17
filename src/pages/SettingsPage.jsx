@@ -4,7 +4,7 @@ import { ChevronRight, Camera } from 'lucide-react';
 const defaults = {
   fullName: 'Alexander Sterling',
   staffId: 'CRT-90210',
-  email: 'a.sterling@circie.pos',
+  email: 'a.sterling@tokolubis.id',
   phone: '+1 (555) 123-4567',
   language: 'English (United States)',
   darkMode: false,

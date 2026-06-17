@@ -1,17 +1,17 @@
-# 🏪 Circie POS — Modern Point of Sale System
+# 🏪 Toko Lubis POS — Modern Point of Sale System
 
 [![React](https://img.shields.io/badge/React-18.3-blue?logo=react&logoColor=white)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-5.3-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-**Circie POS** adalah aplikasi kasir (Point of Sale) modern berbasis web yang dirancang dengan antarmuka pengguna (UI) yang elegan, responsif, dan interaktif. Proyek ini dibangun menggunakan **React**, **Vite**, dan **TailwindCSS** untuk memberikan performa yang cepat dan pengalaman pengguna yang luar biasa.
+**Toko Lubis POS** adalah aplikasi kasir (Point of Sale) modern berbasis web yang dirancang dengan antarmuka pengguna (UI) yang elegan, responsif, dan interaktif. Proyek ini dibangun menggunakan **React**, **Vite**, dan **TailwindCSS** untuk memberikan performa yang cepat dan pengalaman pengguna yang luar biasa.
 
 ---
 
 ## ✨ Fitur Utama
 
-Aplikasi Circie POS dilengkapi dengan berbagai halaman dan komponen fungsional:
+Aplikasi Toko Lubis POS dilengkapi dengan berbagai halaman dan komponen fungsional:
 
 1. **🛍️ Halaman Kasir / Transaksi (Products Page)**
    - **Pencarian & Filter Kategori:** Cari menu dengan cepat dan filter berdasarkan kategori hidangan.
@@ -47,7 +47,7 @@ Proyek ini dibangun menggunakan teknologi-teknologi modern berikut:
 
 ## 🚀 Memulai (Panduan Instalasi)
 
-Ikuti langkah-langkah di bawah ini untuk menjalankan proyek Circie POS di komputer lokal Anda:
+Ikuti langkah-langkah di bawah ini untuk menjalankan proyek Toko Lubis POS di komputer lokal Anda:
 
 ### 📋 Prasyarat
 Pastikan Anda sudah menginstal **Node.js** dan **npm** di komputer Anda.

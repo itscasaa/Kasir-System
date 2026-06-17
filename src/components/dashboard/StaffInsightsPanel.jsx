@@ -20,7 +20,7 @@ export default function StaffInsightsPanel() {
           </div>
           <div>
             <h2 className="text-[15px] font-bold text-textPrimary">Staff Insights</h2>
-            <p className="text-[11px] text-textMuted">Circie POS Intelligence</p>
+            <p className="text-[11px] text-textMuted">Toko Lubis Intelligence</p>
           </div>
         </div>
 

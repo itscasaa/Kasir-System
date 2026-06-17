@@ -38,7 +38,7 @@ export default function Navbar({ activePage = 'products', onNavigate, searchPlac
             storefront
           </span>
         </div>
-        <span className="text-white font-bold text-[17px] tracking-tight">Circie POS</span>
+        <span className="text-white font-bold text-[17px] tracking-tight">Toko Lubis</span>
       </div>
 
       {/* Nav Links */}
@@ -92,7 +92,7 @@ export default function Navbar({ activePage = 'products', onNavigate, searchPlac
                 <div className="min-w-0">
                   <p className="text-[13px] font-semibold text-textPrimary truncate">Alexander Sterling</p>
                   <p className="text-[11px] text-textMuted truncate">Senior Manager</p>
-                  <p className="text-[11px] text-textMuted truncate">a.sterling@circie.pos</p>
+                  <p className="text-[11px] text-textMuted truncate">a.sterling@tokolubis.id</p>
                 </div>
               </div>
               {/* Menu Items */}
