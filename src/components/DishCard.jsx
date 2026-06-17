@@ -21,7 +21,18 @@ export default function DishCard({ dish, onAdd, cartItem, onIncrease, onDecrease
         />
         <div className="flex-1 min-w-0">
           <p className="text-[13px] font-semibold text-textPrimary leading-tight line-clamp-2 mb-1">{dish.name}</p>
-          <p className="text-primary font-bold text-[14px]">{formatCurrency(dish.price)}</p>
+          <div className="flex items-center gap-2">
+            <span className="text-primary font-bold text-[14px]">{formatCurrency(dish.price)}</span>
+            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+              dish.stock <= 3
+                ? 'bg-red-50 text-error border border-red-100'
+                : dish.stock <= 8
+                ? 'bg-orange-50 text-warning border border-orange-100'
+                : 'bg-gray-50 text-textMuted'
+            }`}>
+              Stok: {dish.stock}
+            </span>
+          </div>
         </div>
         <div className="shrink-0" onClick={(e) => e.stopPropagation()}>
           {inCart ? (
@@ -75,7 +86,18 @@ export default function DishCard({ dish, onAdd, cartItem, onIncrease, onDecrease
         )}
       </div>
       <div className="p-3 flex flex-col flex-1">
-        <p className="text-[12px] font-medium text-textPrimary leading-snug line-clamp-2 flex-1 mb-2">{dish.name}</p>
+        <p className="text-[12px] font-medium text-textPrimary leading-snug line-clamp-2 flex-1 mb-1">{dish.name}</p>
+        <div className="mb-2">
+          <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+            dish.stock <= 3
+              ? 'bg-red-50 text-error border border-red-100'
+              : dish.stock <= 8
+              ? 'bg-orange-50 text-warning border border-orange-100'
+              : 'bg-gray-50 text-textMuted'
+          }`}>
+            Stok: {dish.stock}
+          </span>
+        </div>
         <div className="flex items-center justify-between">
           <span className="text-primary font-bold text-[14px]">{formatCurrency(dish.price)}</span>
           <div onClick={(e) => e.stopPropagation()}>

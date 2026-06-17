@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Search, Bell, User, Settings, Clock, LogOut } from 'lucide-react';
 
-const navItems = ['Dashboard', 'Products', 'History', 'Settings'];
+const navItems = ['Dashboard', 'Products', 'History', 'Stock', 'Settings'];
 
 export default function Navbar({ activePage = 'products', onNavigate, searchPlaceholder = 'Search...' }) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);

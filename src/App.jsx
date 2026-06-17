@@ -8,7 +8,8 @@ import OrderDetails from './components/OrderDetails';
 import DashboardPage from './pages/DashboardPage';
 import HistoryPage from './pages/HistoryPage';
 import SettingsPage from './pages/SettingsPage';
-import { mostOrdered, popularDishes } from './data/menuData';
+import StockPage from './pages/StockPage';
+import { allDishes } from './data/menuData';
 import { orderHistory as initialOrderHistory } from './data/historyData';
 
 export default function App() {
@@ -17,12 +18,21 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
   const [orders, setOrders] = useState(initialOrderHistory);
+  const [products, setProducts] = useState(allDishes);
 
   // --- Cart Functions ---
   const addToCart = (dish) => {
+    if (dish.stock <= 0) {
+      alert('⚠️ Stok barang habis!');
+      return;
+    }
     setCart((prev) => {
       const existing = prev.find((item) => item.id === dish.id);
       if (existing) {
+        if (existing.quantity >= dish.stock) {
+          alert(`⚠️ Tidak dapat membeli lebih dari ${dish.stock} barang (stok habis)`);
+          return prev;
+        }
         return prev.map((item) =>
           item.id === dish.id ? { ...item, quantity: item.quantity + 1 } : item
         );
@@ -32,10 +42,19 @@ export default function App() {
   };
 
   const increaseQty = (id) => {
+    const dish = products.find((p) => p.id === id);
+    if (!dish) return;
     setCart((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-      )
+      prev.map((item) => {
+        if (item.id === id) {
+          if (item.quantity >= dish.stock) {
+            alert(`⚠️ Tidak dapat membeli lebih dari ${dish.stock} barang (stok habis)`);
+            return item;
+          }
+          return { ...item, quantity: item.quantity + 1 };
+        }
+        return item;
+      })
     );
   };
 
@@ -70,14 +89,34 @@ export default function App() {
   };
 
   const filteredMostOrdered = useMemo(
-    () => filterDishes(mostOrdered),
-    [searchQuery, activeCategory]
+    () => filterDishes(products.filter((p) => [1, 2, 3].includes(p.id))),
+    [products, searchQuery, activeCategory]
   );
 
   const filteredPopularDishes = useMemo(
-    () => filterDishes(popularDishes),
-    [searchQuery, activeCategory]
+    () => filterDishes(products.filter((p) => ![1, 2, 3].includes(p.id))),
+    [products, searchQuery, activeCategory]
   );
+
+  const handleCheckout = (newOrder) => {
+    setOrders((prev) => [newOrder, ...prev]);
+    // Decrement stock of products in state
+    setProducts((prevProducts) =>
+      prevProducts.map((p) => {
+        const soldItem = newOrder.items.find((item) => item.name === p.name);
+        if (soldItem) {
+          return { ...p, stock: Math.max(0, p.stock - soldItem.quantity) };
+        }
+        return p;
+      })
+    );
+  };
+
+  const handleUpdateStock = (productId, newStock) => {
+    setProducts((prev) =>
+      prev.map((p) => (p.id === productId ? { ...p, stock: newStock } : p))
+    );
+  };
 
   return (
     <div className="flex flex-col h-screen overflow-hidden font-inter">
@@ -93,6 +132,8 @@ export default function App() {
         <DashboardPage orders={orders} />
       ) : activePage === 'history' ? (
         <HistoryPage orders={orders} />
+      ) : activePage === 'stock' ? (
+        <StockPage products={products} onUpdateStock={handleUpdateStock} />
       ) : activePage === 'settings' ? (
         <SettingsPage />
       ) : (
@@ -109,7 +150,7 @@ export default function App() {
               onCategoryChange={setActiveCategory}
             />
             <MenuSection
-              title="Most Ordered"
+              title="Paling Sering Dipesan"
               dishes={filteredMostOrdered}
               cart={cart}
               onAdd={addToCart}
@@ -118,7 +159,7 @@ export default function App() {
               variant="horizontal"
             />
             <MenuSection
-              title="Popular Dishes"
+              title="Produk Populer"
               dishes={filteredPopularDishes}
               cart={cart}
               onAdd={addToCart}
@@ -132,7 +173,7 @@ export default function App() {
             cart={cart}
             onRemove={removeFromCart}
             onClear={clearCart}
-            onCheckout={(newOrder) => setOrders((prev) => [newOrder, ...prev])}
+            onCheckout={handleCheckout}
           />
         </div>
       )}
