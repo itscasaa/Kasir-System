@@ -9,6 +9,7 @@ export default function OrderDetails({ cart, onRemove, onClear, onCheckout }) {
   const [orderType, setOrderType] = useState('Dine In');
   const [paymentStep, setPaymentStep] = useState('idle');
   const [currentOrder, setCurrentOrder] = useState(null);
+  const [cashReceived, setCashReceived] = useState(0);
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const tax = subtotal * 0.1;
@@ -16,7 +17,10 @@ export default function OrderDetails({ cart, onRemove, onClear, onCheckout }) {
 
   const handlePay = () => {
     if (cart.length === 0) return;
-    
+    setPaymentStep('select_method');
+  };
+
+  const handleSelectQRIS = () => {
     const newOrder = {
       id: `#ORD-${Math.floor(1000 + Math.random() * 9000)}`,
       date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
@@ -36,15 +40,49 @@ export default function OrderDetails({ cart, onRemove, onClear, onCheckout }) {
       })),
       taxRate: 0.1
     };
-
     setCurrentOrder(newOrder);
     setPaymentStep('qris');
   };
 
-  const handleConfirmPayment = () => {
+  const handleSelectCash = () => {
+    setCashReceived(total);
+    setPaymentStep('cash');
+  };
+
+  const handleConfirmQRISPayment = () => {
     if (!currentOrder) return;
     if (onCheckout) {
       onCheckout(currentOrder);
+    }
+    setPaymentStep('receipt');
+  };
+
+  const handleConfirmCashPayment = () => {
+    const newOrder = {
+      id: `#ORD-${Math.floor(1000 + Math.random() * 9000)}`,
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }),
+      customer: 'Jhonatan Andrew',
+      type: orderType,
+      table: orderType === 'Dine In' ? 'Table 17' : '',
+      amount: total,
+      status: 'Completed',
+      payment: 'Cash',
+      cashReceived: cashReceived,
+      changeDue: Math.max(0, cashReceived - total),
+      items: cart.map(item => ({
+        name: item.name,
+        note: '',
+        price: item.price,
+        costPrice: item.costPrice || item.price * 0.65,
+        quantity: item.quantity
+      })),
+      taxRate: 0.1
+    };
+
+    setCurrentOrder(newOrder);
+    if (onCheckout) {
+      onCheckout(newOrder);
     }
     setPaymentStep('receipt');
   };
@@ -53,10 +91,22 @@ export default function OrderDetails({ cart, onRemove, onClear, onCheckout }) {
     onClear();
     setPaymentStep('idle');
     setCurrentOrder(null);
+    setCashReceived(0);
   };
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const getFastCashOptions = (totalAmount) => {
+    const options = [totalAmount];
+    const bills = [10000, 20000, 50000, 100000];
+    bills.forEach(bill => {
+      if (bill > totalAmount && !options.includes(bill)) {
+        options.push(bill);
+      }
+    });
+    return options.sort((a, b) => a - b);
   };
 
   return (
@@ -185,13 +235,60 @@ export default function OrderDetails({ cart, onRemove, onClear, onCheckout }) {
           </button>
         </div>
       </div>
+      {/* Choose Payment Method Modal */}
+      {paymentStep === 'select_method' && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl flex flex-col space-y-4">
+            <div className="flex justify-between w-full border-b border-borderBase pb-3">
+              <h3 className="text-[16px] font-bold text-textPrimary">Pilih Metode Pembayaran</h3>
+              <button onClick={() => setPaymentStep('idle')} className="text-textMuted hover:text-textPrimary text-[13px] font-medium">Batal</button>
+            </div>
+            
+            <div className="space-y-1 text-center py-2">
+              <p className="text-[12px] text-textSecondary">Total Bayar</p>
+              <p className="text-[26px] font-extrabold text-primary">{formatCurrency(total)}</p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {/* QRIS Button */}
+              <button
+                onClick={handleSelectQRIS}
+                className="flex flex-col items-center justify-center p-5 border border-borderBase hover:border-primary hover:bg-primaryLight/30 rounded-xl transition-all duration-200 active:scale-[0.97] group space-y-3"
+              >
+                <div className="w-12 h-12 rounded-full bg-primaryLight text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <span className="material-symbols-rounded text-[24px]">qr_code_2</span>
+                </div>
+                <div className="text-center">
+                  <p className="text-[14px] font-bold text-textPrimary">QRIS</p>
+                  <p className="text-[10px] text-textMuted mt-0.5">Otomatis / E-Wallet</p>
+                </div>
+              </button>
+
+              {/* Cash Button */}
+              <button
+                onClick={handleSelectCash}
+                className="flex flex-col items-center justify-center p-5 border border-borderBase hover:border-success hover:bg-green-50/50 rounded-xl transition-all duration-200 active:scale-[0.97] group space-y-3"
+              >
+                <div className="w-12 h-12 rounded-full bg-green-50 text-success flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <span className="material-symbols-rounded text-[24px]">payments</span>
+                </div>
+                <div className="text-center">
+                  <p className="text-[14px] font-bold text-textPrimary">Tunai (Cash)</p>
+                  <p className="text-[10px] text-textMuted mt-0.5">Uang Diterima & Kembalian</p>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* QRIS Modal Overlay */}
       {paymentStep === 'qris' && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl flex flex-col items-center text-center space-y-4">
             <div className="flex justify-between w-full border-b border-borderBase pb-3">
               <h3 className="text-[16px] font-bold text-textPrimary">Pembayaran QRIS</h3>
-              <button onClick={() => setPaymentStep('idle')} className="text-textMuted hover:text-textPrimary text-[13px] font-medium">Batal</button>
+              <button onClick={() => setPaymentStep('select_method')} className="text-textMuted hover:text-textPrimary text-[13px] font-medium">Kembali</button>
             </div>
             
             <div className="space-y-1">
@@ -213,11 +310,94 @@ export default function OrderDetails({ cart, onRemove, onClear, onCheckout }) {
             </div>
 
             <button
-              onClick={handleConfirmPayment}
+              onClick={handleConfirmQRISPayment}
               className="w-full py-3 bg-success hover:bg-successHover text-white text-[14px] font-bold rounded-xl active:scale-[0.98] transition-all duration-200 shadow-md shadow-success/20"
             >
               Simulasikan Pembayaran Sukses
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* Cash Modal Overlay */}
+      {paymentStep === 'cash' && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl flex flex-col space-y-4">
+            <div className="flex justify-between w-full border-b border-borderBase pb-3">
+              <h3 className="text-[16px] font-bold text-textPrimary">Pembayaran Tunai</h3>
+              <button onClick={() => setPaymentStep('select_method')} className="text-textMuted hover:text-textPrimary text-[13px] font-medium">Kembali</button>
+            </div>
+
+            <div className="space-y-3">
+              {/* Total Due */}
+              <div className="flex justify-between items-center bg-gray-50 border border-borderBase rounded-xl p-3">
+                <span className="text-[12px] text-textSecondary">Tagihan Belanja</span>
+                <span className="text-[16px] font-bold text-textPrimary">{formatCurrency(total)}</span>
+              </div>
+
+              {/* Cash Received Input */}
+              <div className="space-y-1.5">
+                <label className="block text-[12px] font-semibold text-textSecondary">Uang Diterima (Rp)</label>
+                <div className="relative flex items-center bg-surface border border-borderBase rounded-xl px-3.5 py-2.5 focus-within:border-primary">
+                  <span className="text-[13px] font-bold text-textSecondary mr-1">Rp</span>
+                  <input
+                    type="number"
+                    value={cashReceived || ''}
+                    onChange={(e) => setCashReceived(Math.max(0, parseInt(e.target.value) || 0))}
+                    placeholder="Masukkan nominal uang..."
+                    className="w-full bg-transparent text-[14px] font-bold text-textPrimary outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Fast Cash Options */}
+              <div className="space-y-1">
+                <span className="text-[11px] font-semibold text-textMuted">Pilihan Uang Pas/Cepat</span>
+                <div className="flex flex-wrap gap-2">
+                  {getFastCashOptions(total).map((opt) => (
+                    <button
+                      key={opt}
+                      onClick={() => setCashReceived(opt)}
+                      className={`px-3 py-1.5 rounded-lg text-[11px] font-bold border transition-all ${
+                        cashReceived === opt
+                          ? 'bg-primary border-primary text-white shadow-sm'
+                          : 'bg-surfaceMuted border-borderBase text-textSecondary hover:border-primary/50'
+                      }`}
+                    >
+                      {opt === total ? 'Uang Pas' : formatCurrency(opt)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Change Calculation */}
+              <div className="border-t border-borderBase pt-3 space-y-1.5">
+                <div className="flex justify-between items-center text-[13px]">
+                  <span className="text-textSecondary">Uang Kembalian:</span>
+                  <span className={`font-bold text-[15px] ${
+                    cashReceived >= total ? 'text-success' : 'text-error'
+                  }`}>
+                    {cashReceived >= total 
+                      ? formatCurrency(cashReceived - total)
+                      : 'Uang Kurang'
+                    }
+                  </span>
+                </div>
+              </div>
+
+              {/* Confirm Pay */}
+              <button
+                onClick={handleConfirmCashPayment}
+                disabled={cashReceived < total}
+                className={`w-full py-3 rounded-xl text-[14px] font-bold transition-all duration-200 active:scale-[0.98] ${
+                  cashReceived >= total
+                    ? 'bg-primary text-white hover:bg-primaryHover shadow-md shadow-primary/10'
+                    : 'bg-borderBase text-textMuted cursor-not-allowed'
+                }`}
+              >
+                Konfirmasi Bayar & Cetak
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -291,8 +471,26 @@ export default function OrderDetails({ cart, onRemove, onClear, onCheckout }) {
                 </div>
               </div>
 
+              <div className="space-y-1 text-[11px] border-b border-dashed border-gray-300 pb-2 pt-2">
+                <div className="flex justify-between text-black font-bold">
+                  <span>Metode</span>
+                  <span>{currentOrder.payment === 'Cash' ? 'TUNAI (CASH)' : 'QRIS'}</span>
+                </div>
+                {currentOrder.payment === 'Cash' && (
+                  <>
+                    <div className="flex justify-between">
+                      <span>Diterima</span>
+                      <span>{formatCurrency(currentOrder.cashReceived)}</span>
+                    </div>
+                    <div className="flex justify-between text-success">
+                      <span>Kembalian</span>
+                      <span>{formatCurrency(currentOrder.changeDue)}</span>
+                    </div>
+                  </>
+                )}
+              </div>
+
               <div className="text-center space-y-1 pt-2">
-                <p className="font-bold text-black">Metode Pembayaran: {currentOrder.payment}</p>
                 <p className="text-[10px] text-gray-500">*** Terima Kasih ***</p>
                 <p className="text-[9px] text-gray-500">Powered by Toko Lubis POS</p>
               </div>
@@ -369,8 +567,26 @@ export default function OrderDetails({ cart, onRemove, onClear, onCheckout }) {
             </div>
           </div>
 
+          <div style={{ fontSize: '11px', lineHeight: '1.5', paddingBottom: '10px', marginBottom: '10px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span>Metode</span>
+              <span>{currentOrder.payment === 'Cash' ? 'TUNAI (CASH)' : 'QRIS'}</span>
+            </div>
+            {currentOrder.payment === 'Cash' && (
+              <>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span>Diterima</span>
+                  <span>{formatCurrency(currentOrder.cashReceived)}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontWeight: 'bold' }}>
+                  <span>Kembalian</span>
+                  <span>{formatCurrency(currentOrder.changeDue)}</span>
+                </div>
+              </>
+            )}
+          </div>
+
           <div className="text-center" style={{ fontSize: '11px', lineHeight: '1.4' }}>
-            <p style={{ fontWeight: 'bold', margin: '0' }}>Metode Pembayaran: {currentOrder.payment}</p>
             <p style={{ margin: '6px 0 0', fontStyle: 'italic' }}>*** Terima Kasih ***</p>
             <p style={{ fontSize: '9px', margin: '2px 0 0', color: '#555' }}>Powered by Toko Lubis POS</p>
           </div>
