@@ -1,8 +1,8 @@
 export const orderQueue = [
-  { id: 1, customer: "Anna Jones", orderId: "#ORD-3321", status: "Ready" },
-  { id: 2, customer: "Jonas Kahndwald", orderId: "#ORD-3123", status: "In Kitchen" },
-  { id: 3, customer: "Martha Nielsen", orderId: "#ORD-3214", status: "In Kitchen" },
-  { id: 4, customer: "Jon Snow", orderId: "#ORD-3291", status: "Pending" },
+  { id: 1, customer: "Anna Jones", orderId: "#ORD-3321", status: "Siap Diambil" },
+  { id: 2, customer: "Jonas Kahndwald", orderId: "#ORD-3123", status: "Sedang Dipacking" },
+  { id: 3, customer: "Martha Nielsen", orderId: "#ORD-3214", status: "Sedang Dipacking" },
+  { id: 4, customer: "Jon Snow", orderId: "#ORD-3291", status: "Menunggu" },
 ];
 
 export const categories = [

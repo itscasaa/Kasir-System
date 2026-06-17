@@ -1,16 +1,16 @@
 import { orderQueue } from '../data/menuData';
 
 const statusConfig = {
-  Ready: { bg: 'bg-green-50', text: 'text-success', border: 'border-green-200', dot: 'bg-success' },
-  'In Kitchen': { bg: 'bg-orange-50', text: 'text-warning', border: 'border-orange-200', dot: 'bg-warning' },
-  Pending: { bg: 'bg-gray-50', text: 'text-textMuted', border: 'border-gray-200', dot: 'bg-textMuted' },
+  'Siap Diambil': { bg: 'bg-green-50', text: 'text-success', border: 'border-green-200', dot: 'bg-success' },
+  'Sedang Dipacking': { bg: 'bg-orange-50', text: 'text-warning', border: 'border-orange-200', dot: 'bg-warning' },
+  Menunggu: { bg: 'bg-gray-50', text: 'text-textMuted', border: 'border-gray-200', dot: 'bg-textMuted' },
 };
 
 export default function OrderQueue() {
   return (
     <section>
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-[16px] font-semibold text-textPrimary">Order Queue</h2>
+        <h2 className="text-[16px] font-semibold text-textPrimary">Antrean Pesanan</h2>
         <span className="text-[12px] text-primaryContainer font-medium cursor-pointer hover:underline">See all</span>
       </div>
       <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-1">
