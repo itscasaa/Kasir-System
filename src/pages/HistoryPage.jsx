@@ -2,9 +2,8 @@ import { useState, useMemo } from 'react';
 import HistoryFilters from '../components/history/HistoryFilters';
 import HistoryTable from '../components/history/HistoryTable';
 import OrderDetailPanel from '../components/history/OrderDetailPanel';
-import { orderHistory } from '../data/historyData';
 
-export default function HistoryPage() {
+export default function HistoryPage({ orders }) {
   const [activeDateTab, setActiveDateTab] = useState('Today');
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('All Statuses');
@@ -13,7 +12,7 @@ export default function HistoryPage() {
   const [activeDetailTab, setActiveDetailTab] = useState('Details');
 
   const filteredOrders = useMemo(() => {
-    return orderHistory.filter((order) => {
+    return orders.filter((order) => {
       const matchesSearch =
         order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
         order.customer.toLowerCase().includes(searchQuery.toLowerCase());

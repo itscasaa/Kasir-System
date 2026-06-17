@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { Copy, MoreHorizontal, Pencil, ShoppingBag } from 'lucide-react';
 import CartItem from './CartItem';
+import { formatCurrency } from '../utils/formatCurrency';
 
 const ORDER_TYPES = ['Dine In', 'Take Away', 'Delivery'];
 
-export default function OrderDetails({ cart, onRemove, onClear }) {
+export default function OrderDetails({ cart, onRemove, onClear, onCheckout }) {
   const [orderType, setOrderType] = useState('Dine In');
 
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -13,7 +14,31 @@ export default function OrderDetails({ cart, onRemove, onClear }) {
 
   const handlePay = () => {
     if (cart.length === 0) return;
-    alert(`✅ Payment successful!\nTotal paid: $${total.toFixed(2)}`);
+    
+    const newOrder = {
+      id: `#ORD-${Math.floor(1000 + Math.random() * 9000)}`,
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }),
+      customer: 'Jhonatan Andrew',
+      type: orderType,
+      table: orderType === 'Dine In' ? 'Table 17' : '',
+      amount: total,
+      status: 'Completed',
+      payment: 'Visa ending in •••• 4242',
+      items: cart.map(item => ({
+        name: item.name,
+        note: '',
+        price: item.price,
+        costPrice: item.costPrice || item.price * 0.65,
+        quantity: item.quantity
+      })),
+      taxRate: 0.1
+    };
+
+    if (onCheckout) {
+      onCheckout(newOrder);
+    }
+    alert(`✅ Pembayaran Berhasil!\nTotal Bayar: ${formatCurrency(total)}`);
     onClear();
   };
 
@@ -118,15 +143,15 @@ export default function OrderDetails({ cart, onRemove, onClear }) {
           <div className="space-y-2 mb-4">
             <div className="flex justify-between items-center">
               <span className="text-[13px] text-textSecondary">Subtotal</span>
-              <span className="text-[13px] font-semibold text-textPrimary">${subtotal.toFixed(2)}</span>
+              <span className="text-[13px] font-semibold text-textPrimary">{formatCurrency(subtotal)}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-[13px] text-textSecondary">Tax (10%)</span>
-              <span className="text-[13px] font-semibold text-textPrimary">${tax.toFixed(2)}</span>
+              <span className="text-[13px] font-semibold text-textPrimary">{formatCurrency(tax)}</span>
             </div>
             <div className="flex justify-between items-center pt-2 border-t border-borderBase">
               <span className="text-[15px] font-bold text-textPrimary">Total</span>
-              <span className="text-[18px] font-extrabold text-primary">${total.toFixed(2)}</span>
+              <span className="text-[18px] font-extrabold text-primary">{formatCurrency(total)}</span>
             </div>
           </div>
 
@@ -139,7 +164,7 @@ export default function OrderDetails({ cart, onRemove, onClear }) {
                 : 'bg-primary text-white hover:bg-primaryHover shadow-md hover:shadow-lg focus:ring-2 focus:ring-primaryContainer focus:ring-offset-2'
             }`}
           >
-            {cart.length === 0 ? 'Pay $0.00' : `Pay $${total.toFixed(2)}`}
+            {cart.length === 0 ? 'Pay Rp 0' : `Pay ${formatCurrency(total)}`}
           </button>
         </div>
       </div>

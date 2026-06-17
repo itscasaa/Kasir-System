@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { SlidersHorizontal } from 'lucide-react';
 import { staffMembers } from '../../data/dashboardData';
+import { formatCurrency } from '../../utils/formatCurrency';
 
 export default function StaffTable() {
   const [selectedIds, setSelectedIds] = useState([]);
@@ -69,7 +70,7 @@ export default function StaffTable() {
                     </div>
                   </td>
                   <td className="px-4 py-3 text-[13px] font-medium text-textPrimary">
-                    {staff.sales}
+                    {formatCurrency(staff.sales)}
                   </td>
                   <td className="px-4 py-3 text-[13px] font-medium text-textPrimary">
                     {staff.avgTip}

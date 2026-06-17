@@ -1,4 +1,5 @@
 import { Trash2 } from 'lucide-react';
+import { formatCurrency } from '../utils/formatCurrency';
 
 export default function CartItem({ item, onRemove }) {
   return (
@@ -11,11 +12,11 @@ export default function CartItem({ item, onRemove }) {
       />
       <div className="flex-1 min-w-0">
         <p className="text-[13px] font-semibold text-textPrimary leading-snug line-clamp-1">{item.name}</p>
-        <p className="text-[12px] text-textMuted mt-0.5">${item.price.toFixed(2)} × {item.quantity}</p>
+        <p className="text-[12px] text-textMuted mt-0.5">{formatCurrency(item.price)} × {item.quantity}</p>
       </div>
       <div className="flex items-center gap-2 shrink-0">
         <span className="text-[14px] font-bold text-textPrimary">
-          ${(item.price * item.quantity).toFixed(2)}
+          {formatCurrency(item.price * item.quantity)}
         </span>
         <button
           onClick={() => onRemove(item.id)}

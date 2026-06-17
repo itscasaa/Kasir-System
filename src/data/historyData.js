@@ -1,4 +1,4 @@
-﻿export const dateTabs = ["Today", "Yesterday", "Last 7 Days", "Custom"];
+export const dateTabs = ["Today", "Yesterday", "Last 7 Days", "Custom"];
 
 export const orderHistory = [
   {
@@ -8,13 +8,13 @@ export const orderHistory = [
     customer: "Anna Jones",
     type: "Dine-in",
     table: "Table 12",
-    amount: 45.50,
+    amount: 248400,
     status: "Completed",
     payment: "Visa ending in \u2022\u2022\u2022\u2022 4242",
     items: [
-      { name: "Truffle Mushroom Risotto", note: "Extra Parmesan", price: 24.00 },
-      { name: "Grilled Salmon Bowl", note: "Quinoa base", price: 16.50 },
-      { name: "Iced Matcha Latte", note: "", price: 5.00 }
+      { name: "Truffle Mushroom Risotto", note: "Extra Parmesan", price: 120000, costPrice: 80000 },
+      { name: "Grilled Salmon Bowl", note: "Quinoa base", price: 85000, costPrice: 55000 },
+      { name: "Iced Matcha Latte", note: "", price: 25000, costPrice: 15000 }
     ],
     taxRate: 0.08
   },
@@ -25,13 +25,13 @@ export const orderHistory = [
     customer: "Marcus Chen",
     type: "Takeaway",
     table: "",
-    amount: 28.25,
+    amount: 64800,
     status: "Cancelled",
     payment: "Not charged",
     items: [
-      { name: "Chicken Katsu Bento", note: "No mayo", price: 18.25 },
-      { name: "Iced Lemon Tea", note: "", price: 5.00 },
-      { name: "French Fries", note: "", price: 5.00 }
+      { name: "Chicken Katsu Bento", note: "No mayo", price: 30000, costPrice: 20000 },
+      { name: "Iced Lemon Tea", note: "", price: 15000, costPrice: 8000 },
+      { name: "French Fries", note: "", price: 15000, costPrice: 8000 }
     ],
     taxRate: 0.08
   },
@@ -42,14 +42,14 @@ export const orderHistory = [
     customer: "Sarah Miller",
     type: "Delivery",
     table: "",
-    amount: 62.10,
+    amount: 178200,
     status: "Refunded",
     payment: "Mastercard ending in \u2022\u2022\u2022\u2022 8891",
     items: [
-      { name: "Large Italian Pizza", note: "Extra cheese", price: 22.00 },
-      { name: "Noodles with Scallops", note: "", price: 18.10 },
-      { name: "Healthy Vegie Salad", note: "No onion", price: 12.00 },
-      { name: "Waffle with Blueberries", note: "", price: 10.00 }
+      { name: "Large Italian Pizza", note: "Extra cheese", price: 80000, costPrice: 50000 },
+      { name: "Noodles with Scallops", note: "", price: 35000, costPrice: 22000 },
+      { name: "Healthy Vegie Salad", note: "No onion", price: 20000, costPrice: 13000 },
+      { name: "Waffle with Blueberries", note: "", price: 30000, costPrice: 20000 }
     ],
     taxRate: 0.08
   },
@@ -60,13 +60,13 @@ export const orderHistory = [
     customer: "David Wilson",
     type: "Dine-in",
     table: "Table 7",
-    amount: 19.50,
+    amount: 59400,
     status: "Completed",
     payment: "Cash",
     items: [
-      { name: "Egg Fried Rice", note: "Spicy", price: 12.00 },
-      { name: "Hot Tea", note: "", price: 3.50 },
-      { name: "Spring Roll", note: "", price: 4.00 }
+      { name: "Egg Fried Rice", note: "Spicy", price: 30000, costPrice: 19000 },
+      { name: "Hot Tea", note: "", price: 10000, costPrice: 4000 },
+      { name: "Spring Roll", note: "", price: 15000, costPrice: 9000 }
     ],
     taxRate: 0.08
   },
@@ -77,12 +77,12 @@ export const orderHistory = [
     customer: "Guest #42",
     type: "Dine-in",
     table: "Table 3",
-    amount: 14.00,
+    amount: 35640,
     status: "Completed",
     payment: "Visa ending in \u2022\u2022\u2022\u2022 1029",
     items: [
-      { name: "Egg Soup with Noodles Inside", note: "", price: 9.00 },
-      { name: "Mineral Water", note: "", price: 5.00 }
+      { name: "Egg Soup with Noodles Inside", note: "", price: 25000, costPrice: 16000 },
+      { name: "Mineral Water", note: "", price: 8000, costPrice: 3000 }
     ],
     taxRate: 0.08
   },
@@ -93,13 +93,13 @@ export const orderHistory = [
     customer: "Elena Rodriguez",
     type: "Takeaway",
     table: "",
-    amount: 33.75,
+    amount: 86400,
     status: "Completed",
     payment: "Debit ending in \u2022\u2022\u2022\u2022 7712",
     items: [
-      { name: "Baked Pancake with Honey Sauce", note: "", price: 9.75 },
-      { name: "Japanese Homemade Original Ramen", note: "Extra egg", price: 18.00 },
-      { name: "Iced Matcha Latte", note: "", price: 6.00 }
+      { name: "Baked Pancake with Honey Sauce", note: "", price: 20000, costPrice: 14000 },
+      { name: "Japanese Homemade Original Ramen", note: "Extra egg", price: 35000, costPrice: 23000 },
+      { name: "Iced Matcha Latte", note: "", price: 25000, costPrice: 15000 }
     ],
     taxRate: 0.08
   }

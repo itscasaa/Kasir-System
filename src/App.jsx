@@ -9,12 +9,14 @@ import DashboardPage from './pages/DashboardPage';
 import HistoryPage from './pages/HistoryPage';
 import SettingsPage from './pages/SettingsPage';
 import { mostOrdered, popularDishes } from './data/menuData';
+import { orderHistory as initialOrderHistory } from './data/historyData';
 
 export default function App() {
   const [activePage, setActivePage] = useState('products');
   const [cart, setCart] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('All');
+  const [orders, setOrders] = useState(initialOrderHistory);
 
   // --- Cart Functions ---
   const addToCart = (dish) => {
@@ -88,9 +90,9 @@ export default function App() {
 
       {/* Page Content */}
       {activePage === 'dashboard' ? (
-        <DashboardPage />
+        <DashboardPage orders={orders} />
       ) : activePage === 'history' ? (
-        <HistoryPage />
+        <HistoryPage orders={orders} />
       ) : activePage === 'settings' ? (
         <SettingsPage />
       ) : (
@@ -130,6 +132,7 @@ export default function App() {
             cart={cart}
             onRemove={removeFromCart}
             onClear={clearCart}
+            onCheckout={(newOrder) => setOrders((prev) => [newOrder, ...prev])}
           />
         </div>
       )}

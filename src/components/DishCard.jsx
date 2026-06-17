@@ -1,4 +1,5 @@
 import { Plus, Minus } from 'lucide-react';
+import { formatCurrency } from '../utils/formatCurrency';
 
 export default function DishCard({ dish, onAdd, cartItem, onIncrease, onDecrease, variant }) {
   const inCart = !!cartItem;
@@ -20,7 +21,7 @@ export default function DishCard({ dish, onAdd, cartItem, onIncrease, onDecrease
         />
         <div className="flex-1 min-w-0">
           <p className="text-[13px] font-semibold text-textPrimary leading-tight line-clamp-2 mb-1">{dish.name}</p>
-          <p className="text-primary font-bold text-[14px]">${dish.price.toFixed(2)}</p>
+          <p className="text-primary font-bold text-[14px]">{formatCurrency(dish.price)}</p>
         </div>
         <div className="shrink-0" onClick={(e) => e.stopPropagation()}>
           {inCart ? (
@@ -76,7 +77,7 @@ export default function DishCard({ dish, onAdd, cartItem, onIncrease, onDecrease
       <div className="p-3 flex flex-col flex-1">
         <p className="text-[12px] font-medium text-textPrimary leading-snug line-clamp-2 flex-1 mb-2">{dish.name}</p>
         <div className="flex items-center justify-between">
-          <span className="text-primary font-bold text-[14px]">${dish.price.toFixed(2)}</span>
+          <span className="text-primary font-bold text-[14px]">{formatCurrency(dish.price)}</span>
           <div onClick={(e) => e.stopPropagation()}>
             {inCart ? (
               <div className="flex items-center gap-1">
