@@ -8,7 +8,7 @@ export default function DishCard({ dish, onAdd, cartItem, onIncrease, onDecrease
   if (variant === 'horizontal') {
     return (
       <div
-        className={`flex items-center gap-3 bg-surface border rounded-xl p-3 cursor-pointer hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 min-w-[220px] ${
+        className={`flex items-center gap-3 bg-surface border rounded-xl p-3 cursor-pointer hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 shrink-0 w-[270px] ${
           inCart ? 'border-primaryContainer shadow-[0_0_0_1px_#3b63f6]' : 'border-borderBase'
         }`}
         onClick={() => !inCart && onAdd(dish)}
@@ -21,17 +21,19 @@ export default function DishCard({ dish, onAdd, cartItem, onIncrease, onDecrease
         />
         <div className="flex-1 min-w-0">
           <p className="text-[13px] font-semibold text-textPrimary leading-tight line-clamp-2 mb-1">{dish.name}</p>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col gap-1">
             <span className="text-primary font-bold text-[14px]">{formatCurrency(dish.price)}</span>
-            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-              dish.stock <= 3
-                ? 'bg-red-50 text-error border border-red-100'
-                : dish.stock <= 8
-                ? 'bg-orange-50 text-warning border border-orange-100'
-                : 'bg-gray-50 text-textMuted'
-            }`}>
-              Stok: {dish.stock}
-            </span>
+            <div>
+              <span className={`inline-block text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+                dish.stock <= 3
+                  ? 'bg-red-50 text-error border border-red-100'
+                  : dish.stock <= 8
+                  ? 'bg-orange-50 text-warning border border-orange-100'
+                  : 'bg-gray-50 text-textMuted'
+              }`}>
+                Stok: {dish.stock}
+              </span>
+            </div>
           </div>
         </div>
         <div className="shrink-0" onClick={(e) => e.stopPropagation()}>
