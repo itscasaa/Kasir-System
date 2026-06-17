@@ -1,7 +1,47 @@
+import { useRef, useState } from 'react';
 import DishCard from './DishCard';
 
 export default function MenuSection({ title, dishes, cart, onAdd, onIncrease, onDecrease, variant }) {
   if (!dishes || dishes.length === 0) return null;
+
+  const scrollRef = useRef(null);
+  const [isDown, setIsDown] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [hasDragged, setHasDragged] = useState(false);
+
+  const handleMouseDown = (e) => {
+    setIsDown(true);
+    setHasDragged(false);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDown(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDown(false);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    if (Math.abs(walk) > 5) {
+      setHasDragged(true);
+    }
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const handleClickCapture = (e) => {
+    if (hasDragged) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+  };
 
   return (
     <section>
@@ -11,7 +51,15 @@ export default function MenuSection({ title, dishes, cart, onAdd, onIncrease, on
       </div>
 
       {variant === 'horizontal' ? (
-        <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-1">
+        <div
+          ref={scrollRef}
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          onClickCapture={handleClickCapture}
+          className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 select-none cursor-grab active:cursor-grabbing"
+        >
           {dishes.map((dish) => (
             <DishCard
               key={dish.id}
